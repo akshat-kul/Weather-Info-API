@@ -23,7 +23,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Create a base class for declarative class definitions
 Base = declarative_base()
 
-# Optionally, log session creation and handle exceptions
+
 def get_db():
     db = SessionLocal()
     try:

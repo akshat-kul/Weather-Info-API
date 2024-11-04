@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey, TIMESTAMP, func
 from sqlalchemy.orm import relationship
 from utils.database import Base
+
 
 class Location(Base):
     __tablename__ = 'locations'
@@ -9,7 +10,7 @@ class Location(Base):
     pincode = Column(String, unique=True, index=True, nullable=False)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
-    created_at = Column(TIMESTAMP, nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False, default=func.now())
 
     # Relationship to access weather data from Location
     weather_data = relationship("WeatherData", back_populates="location")
@@ -23,12 +24,15 @@ class WeatherData(Base):
     id = Column(Integer, primary_key=True, index=True)
     location_id = Column(Integer, ForeignKey('locations.id'), nullable=False)
     for_date = Column(Date, nullable=False)
-    temperature = Column(Float, nullable=False)  # Current temperature in Kelvin
-    feels_like = Column(Float, nullable=False)  # Feels like temperature in Kelvin
-    temp_min = Column(Float, nullable=False)     # Minimum temperature in Kelvin
-    temp_max = Column(Float, nullable=False)     # Maximum temperature in Kelvin
+    temperature = Column(Float, nullable=False)  # Current temperature in Celsius
+    feels_like = Column(Float, nullable=False)  # Feels like temperature in Celsius
+    temp_min = Column(Float, nullable=False)     # Minimum temperature in Celsius
+    temp_max = Column(Float, nullable=False)     # Maximum temperature in Celsius
     pressure = Column(Integer, nullable=False)   # Atmospheric pressure in hPa
     humidity = Column(Integer, nullable=False)    # Humidity percentage
+    visibility = Column(Integer, nullable=False)    #Visibility
+    sunrise = Column(String, nullable=False)       #Sunrise Time
+    sunset = Column(String, nullable=False)         #Sunset Time
     wind_speed = Column(Float, nullable=False)    # Wind speed in m/s
     wind_deg = Column(Integer, nullable=True)     # Wind direction in degrees
     rain_1h = Column(Float, nullable=True)         # Rain volume in the last 1 hour
