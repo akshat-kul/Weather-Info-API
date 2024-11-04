@@ -43,7 +43,12 @@ Follow these steps to get the project up and running on your local machine.
    OPENWEATHER_API_KEY=your_openweather_api_key
    DATABASE_URL=postgresql://username:password@localhost/weather_db
    ```
-4. Run the Server
+4. **Set up the databasae**
+   For creating db and tables to your local machine
+   ```bash
+   python setup_db.py
+   ```
+5. Run the Server
    ```bash
    python main.py
    ```
